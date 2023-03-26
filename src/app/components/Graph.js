@@ -75,7 +75,36 @@ function Graph({ data }) {
       .attr('fill', '#69b3a2')
       .call(drag(simulation));
 
-    node.append('title').text((d) => d.label);
+      // Add tooltip
+      const tooltip = d3
+      .select(containerRef.current)
+      .append('div')
+      .attr('class', 'tooltip')
+      .style('opacity', 0)
+      .style('position', 'absolute')
+      .style('background', 'white')
+      .style('border', '1px solid #999')
+      .style('border-radius', '4px')
+      .style('padding', '4px')
+      .style('pointer-events', 'none');
+
+      node
+      .on('mouseover', (event, d) => {
+        tooltip.style('opacity', 1);
+        tooltip.html(`
+          <p style="color: black">Handle: ${d.handle}</p>
+          <p style="color: black">ID: ${d.name}</p>
+          <p style="color: black">Name: ${d.label}</p>
+          <p style="color: black">Bio: ${d.bio}</p>
+          <p style="color: black">ID: ${d.id}</p>
+          `);
+      })
+      .on('mousemove', (event) => {
+        tooltip.style('left', event.pageX + 10 + 'px').style('top', event.pageY + 10 + 'px');
+      })
+      .on('mouseout', () => {
+        tooltip.style('opacity', 0);
+      });
 
     simulation.on('tick', () => {
       link
