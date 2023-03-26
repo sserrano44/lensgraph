@@ -4,24 +4,24 @@ import LensClient, { polygon } from '@lens-protocol/client';
 
 const lensClient = new LensClient({ environment: polygon });
 
-async function fetchNestedFollowers(profile, depth) {
+async function fetchNestedFollowings(profile, depth) {
   if (depth === 0) return [];
 
   console.log(profile);
 
-  const results = await lensClient.profile.allFollowers({ profileId: profile.id });
-  const nestedFollowersPromises = results.items.map((follower) =>
-    fetchNestedFollowers(follower.wallet.defaultProfile, depth - 1)
+  const results = await lensClient.profile.allFollowing({address: profile.ownedBy});
+  const nestedFollowingsPromises = results.items.map((follower) =>
+  fetchNestedFollowings(follower.profile, depth - 1)
   );
-  const nestedFollowers = await Promise.all(nestedFollowersPromises);
+  const nestedFollowers = await Promise.all(nestedFollowingsPromises);
 
   return results.items.map((follower, index) => ({
-    ...follower.wallet.defaultProfile,
+    ...follower.profile,
     children: nestedFollowers[index],
   }));
 }
 
-export default function useNestedFollowers(handle, depth = 3) {
+export default function useNestedFollowings(handle, depth = 3) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -30,10 +30,10 @@ export default function useNestedFollowers(handle, depth = 3) {
       setLoading(true);
       const profile = await lensClient.profile.fetch({ handle: handle });
       console.log('profile', profile);
-      const followers = await fetchNestedFollowers(profile, depth);
-      console.log('followers', followers);
+      const followings = await fetchNestedFollowings(profile, depth);
+      console.log('followings', followings);
       // debugger;
-      setData([{...profile, children: followers}]);
+      setData([{...profile, children: followings}]);
       setLoading(false);
     })();
   }, [handle, depth]);

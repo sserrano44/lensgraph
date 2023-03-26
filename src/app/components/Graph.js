@@ -104,6 +104,10 @@ function Graph({ data }) {
       })
       .on('mouseout', () => {
         tooltip.style('opacity', 0);
+      })
+      .on('click', (event, d) => {
+        const url = `https://lenster.xyz/u/${d.handle}`;
+        window.open(url, '_blank');
       });
 
     simulation.on('tick', () => {
@@ -144,7 +148,20 @@ function Graph({ data }) {
     return d3.drag().on('start', dragstarted).on('drag', dragged).on('end', dragended);
   };
 
-  return <div ref={containerRef} style={{ width: '100%', height: '600px' }}></div>;
+  return (
+    <div
+      ref={containerRef}
+      style={{
+        width: '100%',
+        height: '100%',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        overflow: 'hidden',
+      }}
+      className="graph"
+    ></div>
+  );
 }
 
 export default Graph;

@@ -1,4 +1,4 @@
-.main {
+/* .main {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -129,6 +129,8 @@
   position: absolute;
   z-index: -1;
 }
+
+*/
 
 /* Conic Gradient Animation */
 .thirteen::before {
@@ -268,4 +270,4 @@
   to {
     transform: rotate(0deg);
   }
-}
+} 
