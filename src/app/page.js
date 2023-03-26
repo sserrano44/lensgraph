@@ -47,12 +47,15 @@ import useNestedFollowers from './hooks/useNestedFollowers';
 import Graph from './components/Graph';
 
 function App() {
+
+  const handle = 'sserrano44.lens';
+
   const { data: profile, loading: profileLoading } = useProfile({
-    handle: 'sserrano44.lens',
+    handle: handle,
   });
 
   const { data: followers, loading: followersLoading } = useNestedFollowers(
-    'sserrano44.lens',
+    handle,
     2
   );
 

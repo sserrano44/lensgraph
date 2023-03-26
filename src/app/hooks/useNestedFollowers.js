@@ -32,8 +32,8 @@ export default function useNestedFollowers(handle, depth = 3) {
       console.log('profile', profile);
       const followers = await fetchNestedFollowers(profile.id, depth);
       console.log('followers', followers);
-      setData(followers);
-      // setData([]);
+      // debugger;
+      setData([{...profile, children: followers}]);
       setLoading(false);
     })();
   }, [handle, depth]);

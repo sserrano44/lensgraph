@@ -7,7 +7,7 @@ function buildGraphData(data) {
   const links = [];
 
   const addNodesLinks = (node, parentId) => {
-    nodes.push({ id: node.id, label: node.name });
+    nodes.push(node);
 
     if (parentId) {
       links.push({ source: parentId, target: node.id });
