@@ -45,7 +45,19 @@ function Graph({ data }) {
 
     const svg = d3.select(containerRef.current).append('svg').attr('viewBox', [0, 0, width, height]);
 
-    const link = svg
+    // Add a zoomable container
+    const zoomContainer = svg.append('g');
+
+    // Add zoom behavior
+    const zoom = d3.zoom().on('zoom', (event) => {
+      zoomContainer.attr('transform', event.transform);
+    });
+
+    // Attach zoom behavior to the SVG
+    svg.call(zoom);
+
+    // Add link and node elements to the zoomable container
+    const link = zoomContainer
       .append('g')
       .selectAll('line')
       .data(links)
@@ -54,7 +66,7 @@ function Graph({ data }) {
       .attr('stroke-opacity', 0.6)
       .attr('stroke-width', 1.5);
 
-    const node = svg
+    const node = zoomContainer
       .append('g')
       .selectAll('circle')
       .data(nodes)
@@ -81,6 +93,7 @@ function Graph({ data }) {
     };
   }, [data]);
 
+
   const drag = (simulation) => {
     function dragstarted(event) {
       if (!event.active) simulation.alphaTarget(0.3).restart();
@@ -106,3 +119,4 @@ function Graph({ data }) {
 }
 
 export default Graph;
+
