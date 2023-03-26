@@ -28,14 +28,16 @@ const client = createClient({
 });
 
 import { LensProvider } from '@lens-protocol/react-web';
+import { GoogleAnalytics } from "nextjs-google-analytics";
 
 
 export default function Home() {
   return (
     <WagmiConfig client={client}>
-    <LensProvider config={lensConfig}>
-      <App />
-    </LensProvider>
+      <GoogleAnalytics trackPageViews />
+      <LensProvider config={lensConfig}>
+        <App />
+      </LensProvider>
     </WagmiConfig>
   )
 }
