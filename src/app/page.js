@@ -53,7 +53,7 @@ function App() {
 
   const { data: followers, loading: followersLoading } = useNestedFollowers(
     'sserrano44.lens',
-    3
+    2
   );
 
   if (profileLoading || followersLoading) {
