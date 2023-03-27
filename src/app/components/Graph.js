@@ -93,8 +93,7 @@ function Graph({ data }) {
         tooltip.style('opacity', 1);
         tooltip.html(`
           <p style="color: black">Handle: ${d.handle}</p>
-          <p style="color: black">ID: ${d.name}</p>
-          <p style="color: black">Name: ${d.label}</p>
+          <p style="color: black">Name: ${d.name}</p>
           <p style="color: black">Bio: ${d.bio}</p>
           <p style="color: black">ID: ${d.id}</p>
           `);
